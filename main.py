@@ -1,4 +1,7 @@
 import os
+import pyautogui
+import time
+import psutil
 import speech_recognition
 import json
 import webbrowser
@@ -26,7 +29,16 @@ def greeting():
 
 def play_music():
     print("Есть Босс!") 
-    exec(open(r"C:\Users\kapus\Desktop\ai_helper\ai_helper\spotify_control.py").read())
+    for proc in psutil.process_iter():
+        if proc.name() == "Spotify.exe":
+            pyautogui.press('playpause')
+            time.sleep(1)
+            return
+
+    os.startfile("C:\\Users\\kapus\\AppData\\Roaming\\Spotify\\Spotify.exe")
+    time.sleep(2)
+    pyautogui.press('playpause')
+    return
 
 def open_telegram():
     """Открытие Telegram"""
@@ -42,16 +54,21 @@ def open_youtube():
     return "Открываю YouTube..."
 
 def main():
-    query = listen_command()
-    if not query:
-        print("Не удалось распознать команду.")
-        return
-    
-    for command, phrases in commands_dict['commands'].items():
-        if query in phrases:
-            response = globals()[command]()
-            print(response)
+    while True:
+        query = listen_command()
+        if not query:
+            print("Не удалось распознать команду.")
+            continue
+        
+        if query in commands_dict.get('exit_commands', []):
+            print("Завершение работы...")
             break
+        
+        for command, phrases in commands_dict['commands'].items():
+            if query in phrases:
+                response = globals()[command]()
+                print(response)
+                break
 
 if __name__ == '__main__':
     main()
