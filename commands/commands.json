@@ -1,9 +1,9 @@
 {
   "commands": {
-    "greeting": ["привет", "здравствуй", "добрый день"],
-    "play_music": ["включи музыку", "запусти музыку"],
-    "open_telegram": ["открой telegram", "запусти telegram", "telegram"],
-    "open_youtube": ["открой ютуб", "запусти ютуб"]
+    "greeting": ["hello", "hi", "good afternoon"],
+    "play_music": ["play music", "start music"],
+    "open_telegram": ["open telegram", "start telegram", "telegram"],
+    "open_youtube": ["open youtube", "start youtube"]
   },
-  "exit_commands": ["выход", "stop", "заверши работу"]
+  "exit_commands": ["exit", "stop", "shutdown"]
 }
