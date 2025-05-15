@@ -13,6 +13,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 engine = pyttsx3.init()
+
+voices = engine.getProperty('voices')
+for voice in voices:
+    if (voice.languages and 'en' in voice.languages[0].decode().lower()) or 'english' in voice.name.lower():
+        engine.setProperty('voice', voice.id)
+        break
+
 API_KEY = os.getenv("GOOGLE_API_KEY")
 if not API_KEY:
     raise ValueError("GOOGLE_API_KEY environment variable not set.")
@@ -31,7 +38,6 @@ def speak(text):
 
 def listen_command():
     try:
-       
         with speech_recognition.Microphone(device_index=1) as mic:
             sr.adjust_for_ambient_noise(mic, duration=0.5)
             audio = sr.listen(mic)
